@@ -1,0 +1,106 @@
+Názov sa volá\dots
+kuko
+dátum
+inštitúcia alebo hocičo iné
+
+% ./compile.py example
+% prvé štyri riadky sú \title, \author, \date a \institute
+
+=== \TeX ===
+
+môžete používať klasickú \LaTeX ovú syntax,
+napr.
+$$ e^{i\pi} + 1 = 0 $$
+(toto je len preprocesor, ktorý aj tak vytvorí \LaTeX ovský
+dokument a všetko čomu nerozumie proste skopíruje tak ako je);
+% napríklad komentáre začínajú %
+avšak niektoré veci sa dajú robiť ľahšie ako upísať sa v beameri;
+
+napríklad:
+
+=== Zoznamy ===
+
+zoznam:
+* prvý bod
+* druhý bod
+  * vnorený tretí
+  * štvrtý
+* a sme späť, piaty
+
+=== Zoznamy ===
+
+číslovaný zoznam sa robí podobne:
+# prvý bod
+  # raz
+    * vnorený
+    * vnorený
+  # dva
+  # tri
+# druhý bod;
+  tu ešte pokračuje (odsadené)
+tu už nie
+
+=== Pauzy ===
+
+moment\dots
+
+---
+toto až po pauze
+
+=== Pauzy v zoznamoch ===
+
+skratka pre pauzy v zoznamoch:
+* prvý bod
+-* druhý bod
+  -* vnorený tretí
+  * štvrtý
+-* a sme späť, piaty
+
+=== Obrázky ===
+
+% (w0.8) je skratka pre [width=0.8\textwidth] parameter \includegraphics
+% podobne (s0.5) je [scale=0.5]
+% a (h1) je to isté ako [height=1\textheight]
+[aliens(w0.8)|Mimozemšťania]
+
+=== Obrázky ===
+
+takto sa dá spraviť viac obrázkov vedľa seba (subfigures)
+[
+[aliens(w0.3)|vlavo]
+[aliens(w0.3)|stred]
+[aliens(w0.3)|vpravo]
+|nájdite 10 rozdielov]
+
+<<comment
+=== Hmmm ===
+
+toto celé je zatiaľ zakomentované,
+dúfam, že to nikto neodkomentoval
+comment>>
+
+=== Skratky ===
+
+* ešte máme skratky pre takéto srandičky:
+  * -->
+  * <---
+  * ===>
+  * <===>
+  * a podobne :-)...
+
+=== Vety ===
+
+\begin{veta}[Mrkvička '10]
+$$a^2 + b^2 = c^2$$
+\end{veta}
+---
+\begin{dosl}
+hmmm
+\end{dosl}
+---
+\begin{otv}
+$a^2 + b^2 + c^2 = d^2$ ?
+\end{otv}
+
+===
+{\bf\Large Vďaka za pozornosť}

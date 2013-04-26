@@ -27,7 +27,7 @@ def parse_fig(s):
     else:
         s, caption = s.split('|',2)
     s = s.strip()
-    if s[-1] == ')':
+    if s and s[-1] == ')':
         p = s.rfind('(')
         figure = s[:p]
         scale = s[p+1:-1]
@@ -52,13 +52,16 @@ def replace_all(text, rl):
     return text
 
 def subst(l):
-  return replace_all(l, [('<-->', r'$\leftrightarrow$'), ('-->', r'$\to$'), ('<--', r'$\gets$'),
+  return replace_all(l, [('<--->', r'$\longleftrightarrow$'), ('--->', r'$\longrightarrow$'), ('<---', r'$\longleftarrow$'),
+                         ('<-->', r'$\leftrightarrow$'), ('-->', r'$\to$'), ('<--', r'$\gets$'),
+                         #('~~>', r'$\to$'),
+                         ('<===>', r'$\Longleftrightarrow$'), ('===>', r'$\Longrightarrow$'), ('<===', r'$\Longleftarrow$'),
                          ('<==>', r'$\Leftrightarrow$'), ('==>', r'$\Rightarrow$'), ('<==', r'$\Leftarrow$'),
                          (':-)', r'\smiley{}'), (':-(', r'\frownie{}')])
 
 OPTIONS_RE = re.compile(r"(((\[[^\]]*\])|({[^}]*}))*)([^\[{].*)")
 def option_list(l):
-    M = OPTIONS_RE.match(l)
+    M = OPTIONS_RE.match(l+' ')
     return M.group(1), M.group(5) # options & rest of the line
 
 if len(sys.argv) < 2:
@@ -115,7 +118,7 @@ print r"""
 \documentclass[slovak]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[slovak]{babel}
-\usepackage{graphicx, subfigure, amssymb, mathptmx, wasysym, amsmath}
+\usepackage{graphicx, subfigure, amssymb, wasysym, amsmath, mathptmx}
 
 \usetheme{Warsaw}
 \setbeamercovered{transparent}
@@ -152,10 +155,10 @@ print r"""
 \def\Prv{\mathbb{P}}
 \def\E{\mathop{\mathsf{E}}}
 
+\begin{document}
+
 \catcode`\"=\active
 \def "{\begingroup\clqq\def "{\endgroup\crqq}}
-
-\begin{document}
 
 \title{%s}
 \author{%s}
@@ -224,10 +227,11 @@ while i < len(L):
             print (list_index[-1]+6)*' ',
 
     if not ls:
+        print
         next()
     elif ls[:4] == r'\bye':
         break
-    elif ls[0] == '=':
+    elif ls[:3] == '===' and (len(ls)<=3 or ls[3] != '>'):
         if nframes > 0:
             print r"\end{frame}" + "\n\n%"+40*'-'+"\n"
         print r"\begin{frame}\frametitle{%s}" % ls.strip('= ')
@@ -252,6 +256,9 @@ while i < len(L):
                 else:
                     print ls
                 next()
+            if ls[0] == '|':
+                _, caption = parse_fig(ls[:-1])
+                print r"  \caption{" + caption + "}"
             # caption
             print r"\end{figure}"
             next()
